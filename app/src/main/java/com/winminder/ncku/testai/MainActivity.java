@@ -16,7 +16,10 @@ import com.google.gson.JsonElement;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,6 +100,26 @@ public class MainActivity extends AppCompatActivity implements AIListener {
                 id = 208;
                 break;
 
+            case "\""+"高雄車站"+"\"":
+                Toast.makeText(getApplicationContext(), "查詢高雄車站動態", Toast.LENGTH_SHORT).show();
+                id = 110;
+                break;
+            case "\""+"美麗島"+"\"":
+                Toast.makeText(getApplicationContext(), "查詢美麗島動態", Toast.LENGTH_SHORT).show();
+                id = 109;
+                break;
+
+            case "\""+"中央公園"+"\"":
+                Toast.makeText(getApplicationContext(), "查詢中央公園動態", Toast.LENGTH_SHORT).show();
+                id = 108;
+                break;
+
+            case "\""+"三多商圈"+"\"":
+                Toast.makeText(getApplicationContext(), "查詢三多商圈動態", Toast.LENGTH_SHORT).show();
+                id = 107;
+                break;
+
+
         }
 
         if(id>0){
@@ -176,9 +199,9 @@ public class MainActivity extends AppCompatActivity implements AIListener {
                     for (int i = 0; i < contacts.length(); i++) {
                         JSONObject c = contacts.getJSONObject(i);
 
-                        String descr = c.getString("descr");
-                        String arrival = c.getString("arrival");
-                        String next_arrival = c.getString("next_arrival");
+                        String descr = "方向："+c.getString("descr");
+                        String arrival = "下班次："+ changeToTime(c.getString("arrival"));
+                        String next_arrival = "下下班次："+changeToTime(c.getString("next_arrival"));
 
                         // tmp hash map for single contact
                         HashMap<String, String> contact = new HashMap<>();
@@ -236,5 +259,15 @@ public class MainActivity extends AppCompatActivity implements AIListener {
         }
 
     }
+
+    private String changeToTime(String remain) {
+        Date dt = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dt);
+        calendar.add(Calendar.MINUTE, Integer.valueOf(remain));
+        dt = calendar.getTime();
+        return dt.toString();
+    }
+
 
 }
